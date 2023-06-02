@@ -1,12 +1,13 @@
-package devandroid.allan.appmotivation
+package devandroid.allan.appmotivation.ui
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import devandroid.allan.appmotivation.databinding.ActivityMainBinding
+import devandroid.allan.appmotivation.infra.MotivationConstants
+import devandroid.allan.appmotivation.R
+import devandroid.allan.appmotivation.infra.SecurityPreferences
 import devandroid.allan.appmotivation.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity(), View.OnClickListener {
@@ -23,6 +24,8 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.buttonSave.setOnClickListener(this)
 
+        verifyUserName()
+
     }
 
     override fun onClick(view: View) {
@@ -31,11 +34,19 @@ class UserActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun verifyUserName() {
+        val name = SecurityPreferences(this).getString(MotivationConstants.KEY.USER_NAME)
+        if (name != "") {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+    }
+
     private fun handleSave() {
 
         val name = binding.editName.text.toString()
 
-        SecurityPreferences(this).storeString("USER_NAME", name)
+        SecurityPreferences(this).storeString(MotivationConstants.KEY.USER_NAME, name)
 
         if (name != "") {
             startActivity(Intent(this, MainActivity::class.java))

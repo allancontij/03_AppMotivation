@@ -1,8 +1,11 @@
-package devandroid.allan.appmotivation
+package devandroid.allan.appmotivation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import devandroid.allan.appmotivation.infra.MotivationConstants
+import devandroid.allan.appmotivation.R
+import devandroid.allan.appmotivation.infra.SecurityPreferences
 import devandroid.allan.appmotivation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun handleUserName() {
-        val name = SecurityPreferences(this).getString("USER_NAME")
+        val name = SecurityPreferences(this).getString(MotivationConstants.KEY.USER_NAME)
         binding.textUserName.text = "Olá, $name!"
     }
 
